@@ -1,0 +1,24 @@
+pragma solidity ^0.4.0;
+contract transaction {
+    event senderLogger(address);
+    event valueLogger(uint);
+    address private owner;
+    modifier isOwner{
+        require(owner == msg.sender);
+        _;
+    }
+    modifier validValue{
+        assert(msg.value >= 1 ether);
+        _;
+    }
+    
+    function transaction(){
+        owner = msg.sender;
+    }
+    
+    function () payable {
+        senderLogger(msg.sender);
+        valueLogger(msg.value);
+        
+    }
+}
